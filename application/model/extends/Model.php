@@ -60,7 +60,7 @@ abstract class Model
     ///// Fonctions sql /////
     /////////////////////////
 
-    public function getNextId()
+    private function getNextId()
     {
         $req = $this->pdo->query("SHOW TABLE STATUS FROM " . DB_NAME . " LIKE '" . $this->table . "' ");
         return $req->fetch()['Auto_increment'];
