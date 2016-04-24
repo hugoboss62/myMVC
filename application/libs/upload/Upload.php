@@ -2,9 +2,9 @@
 
 class Upload 
 {
-    private $_authorized_extensions = array('png', 'jpg', 'jpeg');
-    private $_authorized_extensions_full = array('.png', '.jpg', '.jpeg');
-    private $_authorized_max_size = 5120000;
+    private static $_authorized_extensions = array('png', 'jpg', 'jpeg');
+    private static $_authorized_extensions_full = array('.png', '.jpg', '.jpeg');
+    private static $_authorized_max_size = 5120000;
 
     private $_file;
 
@@ -26,7 +26,7 @@ class Upload
      * @param integer $quality La qualité de l'image
      * @return type
     */
-    public function png2jpg($originalSource, $outputSource, $quality = 100) {
+    public function png2jpg($originalSource, $outputSource) {
 
         $input = imagecreatefrompng($originalSource);
         list($width, $height) = getimagesize($originalSource);
@@ -34,7 +34,7 @@ class Upload
         $white = imagecolorallocate($output,  255, 255, 255);
         imagefilledrectangle($output, 0, 0, $width, $height, $white);
         imagecopy($output, $input, 0, 0, 0, 0, $width, $height);
-        return imagejpeg($output, $outputSource, 100);
+        return imagejpeg($output, $outputSource, $this->_quality);
 
     }
     
@@ -42,10 +42,10 @@ class Upload
      * Permet d'appliquer un type de filtre
      * @param string $originalSource L'image source
      * @param string $outputSource L'image de sortie
-     * @param integer $quality La qualité de l'image
+     * @param integer $loop gaussian blur
      * @return type
     */
-    public function blur($originalSource, $outputSource, $quality = 100, $loop = 10) {
+    public function blur($originalSource, $outputSource, $loop = 10) {
         $input = imagecreatefromjpeg($originalSource);
         list($width, $height) = getimagesize($originalSource);
         $output = imagecreatetruecolor($width, $height);
@@ -56,7 +56,7 @@ class Upload
             $i++;
         }
         imagecopy($output, $input, 0, 0, 0, 0, $width, $height);
-        return imagejpeg($output, $outputSource, 100);
+        return imagejpeg($output, $outputSource, $this->_quality);
         
     }
 
@@ -166,10 +166,8 @@ class Upload
             $wm_h = imagesy($watermark);
             imagecopy($final, $watermark, $tn_w - $wm_w, $tn_h - $wm_h, 0, 0, $tn_w, $tn_h);
         }
-        if(Imagejpeg($final,$destination,$quality)) {
-          return true;
-        }
-        return false;
+
+        return Imagejpeg($final,$destination,$quality);
     }   
         
 

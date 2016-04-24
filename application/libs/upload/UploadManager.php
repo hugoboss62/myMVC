@@ -3,8 +3,11 @@
 class UploadManager 
 {
     /**
-    * Permet d'envoyer le fichier sur le serveur et de l'associer au bon élément
-    */
+     * @param Upload $upload contenant l'instance Upload du fichier à uploader
+     * @param $sizes Les différentes tailles d'image à générer
+     * @param array $param avec type et copy_to
+     * @return bool|string
+     */
     public static function upload(Upload $upload, $sizes, $param = array()) {
         
         $upsError = "";
@@ -133,6 +136,6 @@ class UploadManager
         }
         $msg = '{"status":"error"}';
         if($param['type'] == 'echo'){ echo $msg; return false; }
-        if($param['type'] == 'return'){ return $msg; } 
+        else{ return $msg; }
     } 
 }

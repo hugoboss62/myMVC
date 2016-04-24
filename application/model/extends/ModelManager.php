@@ -11,6 +11,8 @@ abstract class ModelManager{
 			case 'class':
 				return str_replace("sManager","",get_called_class());
 		}
+
+		return null;
 	}
 
 	public static function getAll(array $options = array()){

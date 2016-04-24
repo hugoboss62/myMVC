@@ -2,7 +2,7 @@
 
 ### A lire avant tout nouveau projet :
 
-* Modifier les configurations serveurs dans application/config/config.php
+* Modifier les configurations serveur dans application/config/config.php
 
 * Créer un modèle :
 	* Créer la classe commençant par une majuscule et sans 's' à la fin (EX: Membre)
