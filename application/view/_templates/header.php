@@ -1,65 +1,135 @@
+<?php
+$user = CurrentUser::$user;
+?>
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
 
-        <title><?php echo defined('SEO_TITLE') ? SEO_TITLE . ' - Pixellart' : "Pixell'art - Loïc Wattez"; ?></title>
+<head>
 
-        <!-- Meta Description -->
-        <?php echo defined('SEO_CONTENT') ? '<meta name="description" content="' . SEO_CONTENT . '" />' : ''; ?>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- Meta Facebook -->
-        <?php echo defined('SEO_TITLE') ? '<meta property="og:title" content="' . SEO_TITLE . '" />' : ''; ?>
-        <?php echo defined('SEO_TITLE') ? '<meta property="og:type" content="website" />' : ''; ?>
-        <?php echo defined('SEO_IMAGE') ? '<meta property="og:image" content="' . SEO_IMAGE . '" />' : ''; ?>
-        <?php echo defined('SEO_IMAGE') ? '<meta property="og:url" content="' . URL . $_SERVER["REQUEST_URI"] . '" />' : ''; ?>
-        <?php echo defined('SEO_CONTENT') ? '<meta property="og:description" content="' . SEO_CONTENT . '" />' : ''; ?>
-        <?php echo defined('SEO_CONTENT') ? '<meta property="og:site_name" content="Pixell\'art - Loïc Wattez" />' : ''; ?>
-        <?php echo defined('SEO_CONTENT') ? '<meta property="og:locale" content="fr_FR">' : ''; ?>
-        <?php echo defined('SEO_CONTENT') ? '<meta property="fb:app_id" content="717058388438064" />' : ''; ?>
-        
-        <!-- Mobile Meta -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title><?php echo WEBSITE_NAME; ?> <?php echo !empty($user) ? ' - ' . $user->getName() : ''; ?></title>
 
-        <!-- Indexage Google -->
-        <meta name="google-site-verification" content="Gl2C4Z-uRjeWgd1kGRC-rl9XLVLA3jnf02tLeXkbJxg" />
-        <!--<meta name="robots" content="noindex,follow" /> -->
-        
-        <!-- Bootstrap -->
-        <link href="<?php echo URL; ?>addons/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        
-        <!-- Google Font -->
-        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-        
-        <!-- FontAwesome -->
-        <link href="<?php echo URL; ?>addons/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo URL; ?>addons/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Sweetalert -->
-        <link href="<?php echo URL; ?>addons/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-        
-        <!-- My CSS -->
-        <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>css/design.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>css/responsive-design.css">
-    </head>
-    
-    <body class="col-xs-offset-2">
-    
-        <div id="sidebar" class="col-xs-2">
-            <h1><span class="hidden-xs hidden-sm">Pixell'Art</span><span class="visible-xs visible-sm">P'A</span><br><small style="float:right; padding-right:10px;">Beta</small></h1>
-            <ul id="menu_sidebar" class="nav nav-pills nav-stacked">
-                <li class="active"><a href="<?php echo URL; ?>#"><i class="fa fa-home fa-fw"></i> <span class="hidden-xs">Accueil</span></a></li>
-                <li><a href="<?php echo URL; ?>#videos"><i class="fa fa-video-camera fa-fw"></i> <span class="hidden-xs">Vidéos</span></a></li>
-                <li><a href="<?php echo URL; ?>#contact"><i class="fa fa-phone fa-fw"></i> <span class="hidden-xs">Contact</span></a></li>
-                <li>
-                    <br>
-                    <span class="hidden-xs">
-                        <br><br><br>
-                    </span>
-                </li>
-                <li class="textAlignCenter"><i class="fa fa-share-alt fa-fw"></i> <span class="hidden-xs">Follow me</span></li>
-                <li class="textAlignCenter"><a target="_blank" class="facebook" href="https://www.facebook.com/pixellart.lw"><i class="fa fa-facebook fa-fw"></i></a></li>
-                <li class="textAlignCenter"><a target="_blank" class="twitter" href="https://twitter.com/WattezL"><i class="fa fa-twitter fa-fw"></i></a></li>
-                <li class="textAlignCenter"><a target="_blank" class="googleP" href="https://plus.google.com/u/0/114178251131214211570/posts"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                <li class="textAlignCenter"><a target="_blank" class="youtube" href="https://www.youtube.com/channel/UCFabwJ1_1dWVDSzWoiAgnJQ"><i class="fa fa-youtube fa-fw"></i></a></li>
-            </ul>
+    <!-- MetisMenu CSS -->
+    <link href="<?php echo URL; ?>addons/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="<?php echo URL; ?>addons/sbadmin/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="<?php echo URL; ?>addons/sbadmin/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="<?php echo URL; ?>addons/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- SweetAlert -->
+    <script src="<?php echo URL; ?>addons/sweetalert/sweetalert.css"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <?php if(empty($user)) { ?>
+                <a class="navbar-brand" href="<?php echo URL; ?>"><?php echo WEBSITE_NAME; ?> - Site publique</a>
+            <?php } else { ?>
+                <a class="navbar-brand" href="<?php echo URL; ?>">
+                    <span class="logoHeader"><img src="<?php echo $user->getPicture('logo'); ?>"></span>
+                    <?php echo $user->getName()?> - Site publique
+                </a>
+            <?php } ?>
         </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+        <?php if(!empty($user)) { ?>
+            <li class="dropdown">
+                <a href="<?php echo URL; ?>log/out/" alt="Se déconnecter">
+                    <i class="fa fa-sign-out fa-fw"></i> Se déconnecter
+                </a>
+                <!-- /.dropdown-messages -->
+            </li>
+        <?php } ?>
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="<?php echo URL; ?>home/index/"><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-arrow-right fa-fw"></i> Log<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo URL; ?>log/in/">In</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo URL; ?>log/out/">Out</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="<?php echo URL; ?>inscription/"><i class="fa fa-arrow-right fa-fw"></i> Inscription</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-arrow-right fa-fw"></i> Compte<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo URL; ?>utilisateur/">Profil</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo URL; ?>utilisateur/modifier/">Modifier</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-arrow-right fa-fw"></i> Articles<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo URL; ?>articles/index/">Tous</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo URL; ?>articles/nouveau/">Nouveau</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <div id="page-wrapper" style="padding-bottom: 20px;">
+
+        <?php echo Alert::getNotifications(); ?>

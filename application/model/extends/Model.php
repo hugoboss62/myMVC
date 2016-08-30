@@ -2,58 +2,32 @@
 
 abstract class Model
 {
-    private $pdo, $table, $tableColumns, $tableColumnsType, $pictureFormats;
+    private $pdo, $table, $tableColumns, $pictureFormats;
     
-    protected function __construct($tc, $tct, $pf=null)
+    protected function __construct($table, $tableColumn, $pictureFormats=null)
     {
         // Assignation de l'instance unique de PDO
         $this->pdo = DB::getInstance();
         // Assignation du nom de la table grâce à la classe appelante
-        $this->table = strtolower(get_called_class()) . 's';
+        $this->table = $table;
         // Recensement de l'ensemble des colonnes de la table avec les valeurs associées par référence
-        // Et recensement des types HTML de chaque colonne
-        $this->tableColumns = $tc;
-        $this->tableColumnsType = $tct;
+        $this->tableColumns = $tableColumn;
         foreach(array_keys($this->tableColumns) as $key)
             $this->tableColumns[$key] = &$this->$key;
 
-        $this->pictureFormats = $pf;
-    }
-
-    public function get($attr)
-    {
-        switch($attr)
-        {
-            case 'id':
-                return isset($this->id) ? $this->id : $this->getNextId();
-            default:
-                return $this->$attr;
-        }
-    }
-
-    public function getTableColumnsType()
-    {
-        // Vérifie si tableColumnsType est un tableau associatif
-        if((array_keys($this->tableColumnsType)[0]) !== 'id')
-            foreach(array_keys($this->tableColumns) as $key){
-                $firstValue = array_shift($this->tableColumnsType);
-                $this->tableColumnsType[$key] = $firstValue;
-            }
-
-        return $this->tableColumnsType;
-    }
-
-    public function set($attr, $value)
-    {
-        return $this->$attr = $value;
+        // Si la table comporte l'upload de photo
+        $this->pictureFormats = $pictureFormats;
     }
 
     public function setFromForms()
     {
-        foreach($_POST as $key => $val)
-            $this->$key = empty($val) ? $this->$key : Functions::secure($val);
+        foreach($_POST as $key => $val){
+            $setter = 'set' . ucfirst($key);
+            if(method_exists($this, $setter))
+                $this->$setter(empty($val) ? $this->$key : Functions::secure($val));
+        }
         foreach($_FILES as $key => $val)
-            $this->$key = (Functions::upload($key, ROOT . 'public/img/' . $this->table . '/' . $this->get('id') . '/', 'picture', $this->pictureFormats) OR $this->$key);
+            $this->$key = (Functions::upload($key, ROOT . 'public/img/' . $this->table . '/' . $this->getNextId() . '/', 'picture', $this->pictureFormats) OR $this->$key);
     }
 
     /////////////////////////
@@ -91,7 +65,7 @@ abstract class Model
         $sql = substr($sql,0,-1) . ')';
         $query = $this->pdo->prepare($sql);
 
-        $success = $query->execute($this->tableColumns);
+        $success = @$query->execute($this->tableColumns);
 
         if($success)
             $this->id = $this->pdo->lastInsertId();

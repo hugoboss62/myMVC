@@ -42,8 +42,8 @@ define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
 define('URL_SUB_FOLDER', str_replace(URL_PUBLIC_FOLDER, '', dirname($_SERVER['SCRIPT_NAME'])));
 define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 
-// Is administrator logged ?
-//define('LOGGED', Functions::isLogged());
+// Website Name
+define('WEBSITE_NAME', 'myMVC');
 
 /**
  * Configuration for: Database
@@ -51,7 +51,11 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  */
 define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost:8889');
-define('DB_NAME', 'pixellart');
+define('DB_NAME', 'mymvc');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');
 define('DB_CHARSET', 'utf8');
+
+// Session starting and init object with user session
+session_start();
+new CurrentUser();

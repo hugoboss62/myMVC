@@ -174,15 +174,15 @@ class Upload
     // GETTER       
 
     public function get_authorized_extensions() {
-        return $this->_authorized_extensions;
+        return self::$_authorized_extensions;
     }
 
     public function get_authorized_extensions_full() {
-        return $this->_authorized_extensions_full;
+        return self::$_authorized_extensions_full;
     }
 
     public function get_authorized_max_size() {
-        return $this->_authorized_max_size;
+        return self::$_authorized_max_size;
     }
 
     public function get_file() {
@@ -225,15 +225,15 @@ class Upload
     // SETTER
 
     public function set_authorized_extensions($_authorized_extensions) {
-        $this->_authorized_extensions = $_authorized_extensions;
+        self::$_authorized_extensions = $_authorized_extensions;
     }
 
     public function set_authorized_extensions_full($_authorized_extensions_full) {
-        $this->_authorized_extensions_full = $_authorized_extensions_full;
+        self::$_authorized_extensions_full = $_authorized_extensions_full;
     }
 
     public function set_authorized_max_size($_authorized_max_size) {
-        $this->_authorized_max_size = $_authorized_max_size;
+        self::$_authorized_max_size = $_authorized_max_size;
     }
 
     public function set_file($_file) {

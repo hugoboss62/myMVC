@@ -1,24 +1,27 @@
-        	<!-- Facebook -->
-                <div id="fb-root"></div>
-                <script src="<?php echo URL; ?>js/fb.js"></script>
+</div>
+<!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
 
-                <!-- jQuery -->
-                <script src="<?php echo URL; ?>addons/jquery/dist/jquery.min.js"></script>
-                
-                <!-- Bootstrap -->
-                <script src="<?php echo URL; ?>addons/bootstrap/dist/js/bootstrap.min.js"></script>
-                
-                <!-- Google Map -->
-                <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-                
-                <!-- Mixitup -->
-                <script src="<?php echo URL; ?>addons/mixitup/src/jquery.mixitup.js"></script>
+<!-- jQuery -->
+<script src="<?php echo URL; ?>addons/jquery/dist/jquery.min.js"></script>
 
-                <!-- SweetAlert -->
-                <script src="<?php echo URL; ?>addons/sweetalert/sweetalert.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo URL; ?>addons/bootstrap/dist/js/bootstrap.min.js"></script>
 
-                <!-- MyJS -->
-                <script src="<?php echo URL; ?>js/application.js"></script>
-	
-	</body>
-</html>	
+<!-- Metis Menu Plugin JavaScript -->
+<script src="<?php echo URL; ?>addons/metisMenu/dist/metisMenu.min.js"></script>
+
+<?php if($_SERVER["REQUEST_URI"] === '/administration/index/') { ?>
+    <!-- Morris Charts JavaScript -->
+    <script src="<?php echo URL; ?>addons/raphael/raphael-min.js"></script>
+    <script src="<?php echo URL; ?>addons/morrisjs/morris.min.js"></script>
+    <script src="<?php echo URL; ?>addons/sbadmin/morris/morris-data.js"></script>
+<?php } ?>
+
+<!-- Custom Theme JavaScript -->
+<script src="<?php echo URL; ?>addons/sbadmin/js/sb-admin-2.js"></script>
+
+</body>
+
+</html>

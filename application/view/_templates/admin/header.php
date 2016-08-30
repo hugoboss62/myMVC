@@ -1,3 +1,6 @@
+<?php
+$user = CurrentUser::$user;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pixell'Art Administration</title>
+    <title><?php echo WEBSITE_NAME; ?> <?php echo !empty($user) ? ' - ' . $user->getName() : ''; ?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo URL; ?>addons/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,85 +30,67 @@
     <link href="<?php echo URL; ?>addons/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?php echo URL; ?>addons/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- SweetAlert -->
+    <script src="<?php echo URL; ?>addons/sweetalert/sweetalert.css"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
 </head>
 
 <body>
 
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?php echo URL; ?>administration/index/">Pixell'Art Administration</a>
-            </div>
-            <!-- /.navbar-header -->
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <?php if(empty($user)) { ?>
+                <a class="navbar-brand" href="<?php echo URL; ?>"><?php echo WEBSITE_NAME; ?> - Administration</a>
+            <?php } else { ?>
+                <a class="navbar-brand" href="<?php echo URL; ?>">
+                    <span class="logoHeader"><img src="<?php echo $user->getPicture('logo'); ?>"></span>
+                    <?php echo $user->getName()?> - Administration
+                </a>
+            <?php } ?>
+        </div>
+        <!-- /.navbar-header -->
 
-            <?php if(LOGGED) { ?>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <a href="<?php echo URL; ?>administration/logout/" alt="Se déconnecter">
-                            <i class="fa fa-sign-out fa-fw"></i> Sé déconnecter
-                        </a>
-                        <!-- /.dropdown-messages -->
+        <ul class="nav navbar-top-links navbar-right">
+        <?php if(!empty($user)) { ?>
+            <li class="dropdown">
+                <a href="<?php echo URL; ?>log/out/" alt="Se déconnecter">
+                    <i class="fa fa-sign-out fa-fw"></i> Se déconnecter
+                </a>
+                <!-- /.dropdown-messages -->
+            </li>
+        <?php } ?>
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="<?php echo URL; ?>home/index/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                 </ul>
-                <!-- /.navbar-top-links -->
-            
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            <li>
-                                <a href="<?php echo URL; ?>administration/index/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-video-camera fa-fw"></i> Vidéos<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="<?php echo URL; ?>administration/videos/">Toutes</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo URL; ?>administration/video/new/">Nouvelle</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="<?php echo URL; ?>administration/tags/"><i class="fa fa-tags fa-fw"></i> Tags</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo URL; ?>administration/messages/"><i class="fa fa-envelope fa-fw"></i> Messages</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-tasks fa-fw"></i> Tâches<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="<?php echo URL; ?>administration/tasks/">Toutes</a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo URL; ?>administration/task/new/">Nouvelle</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.sidebar-collapse -->
-                </div>
-                <!-- /.navbar-static-side -->
-            <?php } ?>
-        </nav>
-        <div id="page-wrapper" style="padding-bottom: 20px;">
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <div id="page-wrapper" style="padding-bottom: 20px;">
+
+        <?php echo Alert::getNotifications(); ?>

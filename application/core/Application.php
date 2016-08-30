@@ -47,16 +47,21 @@ class Application
                 }
 
             } else {
-                if (strlen($this->url_action) == 0) {
+                if (is_numeric($this->url_action)) {
+                    // no action defined: call the default index() method of a selected controller
+                    $this->url_controller->index($this->url_action);
+                }elseif (strlen($this->url_action) == 0) {
                     // no action defined: call the default index() method of a selected controller
                     $this->url_controller->index();
                 }
                 else {
-                    header('location: ' . URL . 'error');
+                    new Alert('warning', "exclamation-triangle", "Ce lien n'existe pas...");
+                    header('location: ' . URL . 'erreur');
                 }
             }
         } else {
-            header('location: ' . URL . 'error');
+            new Alert('warning', "exclamation-triangle", "Ce lien n'existe pas...");
+            header('location: ' . URL . 'erreur');
         }
     }
 

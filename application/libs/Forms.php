@@ -55,12 +55,12 @@ class Forms{
 		return $form;
 	}
 
-	public static function input($name, $value=null, array $options = array())
+	public static function input($name, $value=null, $labelName=null)
 	{
-		self::init($options);
+		$labelName = isset($labelName) ? $labelName : $name;
 
 		$form  = '<div class="form-group">';
-		$form .= '<label for="' . $name . '" class="col-sm-2 control-label">' . ucfirst($name) . '</label>';
+		$form .= '<label for="' . $name . '" class="col-sm-2 control-label">' . ucfirst($labelName) . '</label>';
 		$form .= is_null($value) ? '' : '<div class="col-sm-2"><img class="img-responsive" src="' . $value . '" /></div>';
 		$form .= '<div class="col-sm-8">';
 		$form .= '<input type="file" id="' . $name . '" name="' . $name . '">';
